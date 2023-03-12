@@ -1,5 +1,5 @@
-miniflux.<domain>.<suffix> {
-    reverse_proxy ttrss:80 {
+ttrss.<domain>.<suffix> {
+    reverse_proxy service.rss:80 {
       flush_interval -1
     }
     encode zstd gzip
@@ -9,4 +9,5 @@ rsshub.<domain>.<suffix> {
     reverse_proxy rsshub:1200 {
       flush_interval -1
     }
+    encode zstd gzip
 }

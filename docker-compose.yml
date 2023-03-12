@@ -10,12 +10,12 @@ services:
       - ${DATA_FOLDER}/caddy_data:/data
       - ${DATA_FOLDER}/caddy_config:/config
       - ${DATA_FOLDER}/caddy_config/Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - public_access
 
   service.rss:
     image: wangqiru/ttrss:latest
     container_name: ttrss
-    ports:
-      - 181:80
     environment:
       - SELF_URL_PATH=https://${SUBDOMAIN}.${DOMAIN_NAME}/ # please change to your own domain
       - DB_PASS=${DB_PASS} # use the same password defined in `database.postgres`
@@ -63,13 +63,14 @@ services:
     image: diygod/rsshub:latest
     container_name: rsshub
     restart: unless-stopped
-    ports:
-      - "1200:1200"
     environment:
       NODE_ENV: production
       CACHE_TYPE: redis
       REDIS_URL: "redis://redis:6379/"
       PUPPETEER_WS_ENDPOINT: "ws://browserless:3000"
+    networks:
+      - public_access
+      - service_only
     depends_on:
       - redis
       - browserless
@@ -77,12 +78,16 @@ services:
   browserless:
     image: browserless/chrome:latest
     container_name: browserless
+    networks: 
+      - service_only
     restart: unless-stopped
 
   redis:
     image: redis:alpine
     container_name: redis
     restart: unless-stopped
+    networks: 
+      - service_only
     volumes:
       - redis-data:/data
 

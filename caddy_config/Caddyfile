@@ -1,5 +1,12 @@
 miniflux.<domain>.<suffix> {
-    reverse_proxy miniflux:8888 {
+    reverse_proxy ttrss:80 {
+      flush_interval -1
+    }
+    encode zstd gzip
+}
+
+rsshub.<domain>.<suffix> {
+    reverse_proxy rsshub:1200 {
       flush_interval -1
     }
 }

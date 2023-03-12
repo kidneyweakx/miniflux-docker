@@ -1,5 +1,5 @@
-ttrss.<domain>.<suffix> {
-    reverse_proxy ttrss:181 {
+miniflux.<domain>.<suffix> {
+    reverse_proxy miniflux:8080 {
       flush_interval -1
     }
 }

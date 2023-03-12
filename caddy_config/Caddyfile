@@ -1,0 +1,5 @@
+ttrss.<domain>.<suffix> {
+    reverse_proxy ttrss:181 {
+      flush_interval -1
+    }
+}
